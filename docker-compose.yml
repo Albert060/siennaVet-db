@@ -7,9 +7,11 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./01_create_tables.sql:/docker-entrypoint-initdb.d/01_create_tables.sql:ro
+    env_file:
+      - ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: "root123"
-      MYSQL_DATABASE: "veterinariatfm"
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
       timeout: 20s
